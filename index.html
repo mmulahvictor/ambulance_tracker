@@ -1,73 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ambulance tracker</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Include Leaflet CSS and JavaScript -->
-    <link rel="stylesheet" src="./leaflet.css" />
-    <script src="./leaflet.js"></script>
-    <style>
-        /* Set the height of the map container to 400px */
-        #mapid {
-            height: 400px;
-            /* Set the map width to fill the entire viewport */
-            width: 100%;
-            /* Add a margin to the top and bottom of the map container */
-            margin: 16px 0;
-        }
-        /* Center the heading */
-        h1 {
-            text-align: center;
-            margin: 16px 0;
-        }
-    </style>
+  <title>Ambulance Tracker</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
 </head>
 <body>
-    
-    <h1>Car Tracking Map</h1>
-    <div id="mapid"></div>
-        <script>
-            // JavaScript code goes here
-            // initialize the map and set the initial coordinates to the center of the map
-            let map = L.map('mapid').setView([-2.2833, 37.9333], 13);
-        
-            // add a tile layer to the map using OpenStreetMap's standard tile layer
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-                    '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-                    'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                maxZoom: 18
-            }).addTo(map);
-        
-            // create a marker for the car and add it to the map
-            let carMarker = L.marker([-2.2833, 37.9333]).addTo(map);
-        
-            // function to update the marker position with new coordinates
-            function updateMarker(lat, lon) {
-                carMarker.setLatLng([lat, lon]);
-            }
-        
-            // function to get the geolocation of the user's device
-            function getLocation() {
-                if (navigator.geolocation) {
-                    navigator.geolocation.watchPosition(showPosition);
-                } else {
-                    alert("Geolocation is not supported by this browser.");
-                }
-            }
-        
-            // function to show the position of the car on the map
-            function showPosition(position) {
-                let lat = position.coords.latitude;
-                let lon = position.coords.longitude;
-                updateMarker(lat, lon);
-                console.log("Latitude: " + lat + ", Longitude: " + lon);
-            }
-        
-            // call the getLocation function to start tracking the car's movement
-            getLocation();
-        </script>
-    </div>
+  <div id="mapid" style="height: 500px;"></div>
+  <script>
+    var map = L.map('mapid').setView([-2.2833, 37.9333], 13); // Set initial view
+
+    // Add a tile layer to the map
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+      maxZoom: 18,
+    }).addTo(map);
+
+    // Add ambulance markers to the map
+    var ambulances = [
+      { lat: -2.2833, lng: 37.9333, speed: 50, direction: 90 },
+      { lat: -2.2843, lng: 38.0003, speed: 40, direction: 135 },
+      { lat: -2.2832, lng: 37.9330, speed: 60, direction: 270 },
+    ];
+    for (var i = 0; i < ambulances.length; i++) {
+      var ambulance = ambulances[i];
+      L.marker([ambulance.lat, ambulance.lng])
+        .addTo(map)
+        .bindPopup(`Speed: ${ambulance.speed} mph<br>Direction: ${ambulance.direction} degrees`);
+    }
+  </script>
 </body>
 </html>
