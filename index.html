@@ -8,8 +8,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
 </head>
 <body>
+  <h1>Makueni EOC programm</h1>
   <div id="mapid" style="height: 500px;"></div>
   <script>
+    //login info
+    const username = prompt("Please enter your username:");
+    const password = prompt("Please enter your password:");
+
     var map = L.map('mapid').setView([-2.2833, 37.9333], 13); // Set initial view
 
     // Add a tile layer to the map
@@ -22,7 +27,7 @@
     var ambulances = [
       { lat: -2.2833, lng: 37.9333, speed: 50, direction: 90 },
       { lat: -2.2843, lng: 38.0003, speed: 40, direction: 135 },
-      { lat: -2.2832, lng: 37.9330, speed: 60, direction: 270 },
+      { lat: -2.2800, lng: 37.9300, speed: 60, direction: 270 },
     ];
     for (var i = 0; i < ambulances.length; i++) {
       var ambulance = ambulances[i];
